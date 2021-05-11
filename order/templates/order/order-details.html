@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block stylesheets %}
+<style>
+
+@media print {
+  .noprint {
+    display: none;
+  }
+
+ @page {
+    size: auto;   /* auto is the initial value */
+    margin: 0;  /* this affects the margin in the printer settings */
+    }
+}
+
+
+</style>
+
+{% endblock stylesheets%}
+
+{% block content %}
+<div class="col-sm-12">
+    <div class="panel panel-bd">
+
+        <div id="printableArea">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-10" style="display: inline-block;width: 68%">
+                        <span class="label label-success-outline m-r-15 p-10">Customer </span>
+                        <address style="margin-top:10px">
+                            {% for customers in customer %}
+                            <strong>Customer Name : {{ customers.name }}</strong><br>
+                            <abbr>Mobile :</abbr> {{ customers.mobile }}<br>
+                            <abbr>Email address: {{ customers.email }}</abbr>
+                            {% endfor %}
+                        </address>
+                    </div>
+
+                     
+                </div>
+                <hr>
+                <div class="table-responsive m-b-20">
+                    <table class="table table-fixed table-bordered table-hover bg-white" id="order_invoice">
+                        <thead>
+                        <tr>
+
+                            <th class="text-center">Sl</th>
+                            <th class="text-center">Customer</th>
+                            <th class="text-center" style="width:100px;">Product</th>
+                            <th class="text-center" style="width:100px;">Price</th>
+                            <th class="text-center">Created At</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+ 
+                        <tr>
+                            <td>
+                                {{  order.id }}
+                            </td>
+                            <td class="text-right"> {{ order.customer  }}</td>
+                            <td class="text-right"> {% for products in order.products.all %}{{ products }}{% endfor %}</td>
+                            {% for amounts in obj %}
+                            <td class="text-right"><strong>  {{ amounts }} </strong></td>
+                            {% endfor %}
+                            <td class="text-right"> {{ order.created_at  }}</td>
+                        </tr>
+                      
+
+
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block custom_js %}
+
+<script>
+  
+   $(document).ready(function() {
+                  $('#order_invoice').DataTable( {
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                  });
+            });
+</script>
+
+{% endblock custom_js %}
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 col-md-12">
+        <div class="card ">
+            <div class="card-header py-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="fs-17 font-weight-600 mb-0">Pipe List</h6>
+                    </div>
+
+                    <div class="text-right">
+                        <a href="{% url 'add-product' %}"
+                           class="btn btn-success btn-sm mr-1"><i class="fas fa-plus mr-1"></i>Add Product</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="foodList_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table class="table display table-bordered table-striped table-hover dataTable dtr-inline"
+                               cellspacing="0" width="100%" id="productList" role="grid" style="width: 100%;">
+                            <thead>
+                            <tr role="row">
+                                <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Sl">Sl</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Name</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Code</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Category</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Price</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Current Stock</th>
+
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Created At</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Update</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Delete</th>
+                           
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for products_item in products %}
+                            <tr role="row" class="odd">
+                                <td tabindex="0">{{ products_item.id }}</td>
+                                <td width="20%"> {{ products_item.name }}</td>   
+                                <td width="20%"> {{ products_item.code }}</td>
+                                <td width="20%"> {{ products_item.category }}</td>
+                                <td width="20%"> {{ products_item.price }}</td>
+                                <td width="20%"> {{ products_item.current_stock }}</td>
+                                <td width="20%"> {{ products_item.created_at }}</td>
+
+
+                                <td width="20%">
+                                    <a href="{% url 'product-update' products_item.id %}"
+                                                class="btn btn-success-soft btn-sm" data-toggle="tooltip"
+                                                data-placement="left"
+                                                title="Update"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                             </td>   
+ 
+                                 <td width="20%">         
+                                    <a onclick="return confirm('Are You Sure ?')"
+                                        href="{% url 'delete-product' products_item.id %}"
+                                        class="btn btn-danger-soft btn-sm" data-toggle="tooltip" data-placement="right"
+                                        title="Delete "><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                     </td> 
+ 
+
+
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+<script>
+  
+    $(document).ready(function() {
+                   $('#productList').DataTable( {
+                     dom: 'Bfrtip',
+                     buttons: [
+                         'copy', 'csv', 'excel', 'pdf', 'print'
+                     ]
+                   });
+             });
+ </script>
+ 
+ {% endblock custom_js %}

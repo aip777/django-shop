@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 col-md-12">
+        <div class="card ">
+            <div class="card-header py-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="fs-17 font-weight-600 mb-0">Customer List</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="foodList_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table class="table display table-bordered table-striped table-hover dataTable dtr-inline"
+                               cellspacing="0" width="100%" id="customerlist" role="grid" style="width: 100%;">
+                            <thead>
+                            <tr role="row">
+                                <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Sl">Sl</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Name</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Mobile</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Email</th>
+                                <th class="sorting_asc" rowspan="1" colspan="1" aria-sort="ascending">Created At</th>
+                           
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for customers in customer %}
+                            <tr role="row" class="odd">
+                                <td tabindex="0">{{ customers.id }}</td>
+                                <td width="20%"> {{ customers.name }}</td>   
+                                <td width="20%"> {{ customers.mobile }}</td>   
+                                <td width="20%"> {{ customers.email }}</td>   
+                                   
+                                <td width="20%"> {{ customers.created_at }}</td>
+
+
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block custom_js %}
+
+<script>
+  
+   $(document).ready(function() {
+                  $('#customerlist').DataTable( {
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                  });
+            });
+</script>
+
+{% endblock custom_js %}
